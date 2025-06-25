@@ -2,23 +2,22 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const UserModel = require("./models/Users");
-require("dotenv").config(); // Load environment variables
+require("dotenv").config(); // Load env variables
 
 const app = express();
 
-// ✅ CORS Configuration
+// ✅ CORS Configuration – Fixes your error!
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL || "",
-    methods: "GET,POST,PUT,DELETE",
-    allowedHeaders: "Content-Type",
+    origin: ["http://localhost:5173", "https://your-frontend-url.onrender.com"],
+    methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
 );
 
 app.use(express.json());
 
-// ✅ MongoDB Connection
+// ✅ Connect to MongoDB
 async function connectDB() {
   try {
     await mongoose.connect(
@@ -33,11 +32,12 @@ async function connectDB() {
 }
 connectDB();
 
-// ✅ Routes
+// ✅ Test Route
 app.get("/", (req, res) => {
   res.send("🚀 Server is running on Render!");
 });
 
+// ✅ Routes
 app.get("/users", async (req, res) => {
   try {
     const users = await UserModel.find({});
@@ -90,7 +90,7 @@ app.delete("/users/:id", async (req, res) => {
   }
 });
 
-// ✅ Start the server (Required for Render)
+// ✅ Start Server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`🚀 Server is running on port ${PORT}`);
