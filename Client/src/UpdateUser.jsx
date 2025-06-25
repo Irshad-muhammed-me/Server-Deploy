@@ -11,7 +11,7 @@ const UpdateUser = () => {
 
   useEffect(() => {
     axios
-      .get(`${import.meta.env.VITE_API_URL}/getUser/${id}`)
+      .get(`${import.meta.env.VITE_API_URL}/users/${id}`)
       .then((result) => {
         console.log(result);
         setName(result.data.name);
@@ -24,7 +24,7 @@ const UpdateUser = () => {
   const Update = (e) => {
     e.preventDefault();
     axios
-      .put(`${import.meta.env.VITE_API_URL}/updateUser/${id}`, {
+      .put(`${import.meta.env.VITE_API_URL}/users/${id}`, {
         name,
         email,
         age,

@@ -7,14 +7,23 @@ const Users = () => {
 
   useEffect(() => {
     axios
-      .get(`${import.meta.env.VITE_API_URL}`)
-      .then((result) => setUsers(result.data))
-      .catch((err) => console.log(err));
+      .get(`${import.meta.env.VITE_API_URL}/users`)
+      .then((result) => {
+        if (Array.isArray(result.data)) {
+          setUsers(result.data);
+        } else {
+          setUsers([]);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        setUsers([]);
+      });
   }, []);
 
   const handleDelete = (id) => {
     axios
-      .delete(`${import.meta.env.VITE_API_URL}/deleteUser/${id}`)
+      .delete(`${import.meta.env.VITE_API_URL}/users/${id}`)
       .then((res) => {
         console.log(res);
         window.location.reload();

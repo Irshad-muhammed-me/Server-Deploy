@@ -11,7 +11,7 @@ const CreateUser = () => {
   const Submit = (e) => {
     e.preventDefault();
     axios
-      .post(`${import.meta.env.VITE_API_URL}/createUser`, { name, email, age })
+      .post(`${import.meta.env.VITE_API_URL}/users`, { name, email, age })
       .then((result) => {
         console.log(result);
         navigate("/");
@@ -37,7 +37,9 @@ const CreateUser = () => {
                   id="name"
                   placeholder="Enter Name"
                   className="form-control"
+                  value={name}
                   onChange={(e) => setName(e.target.value)}
+                  required
                 />
               </div>
               <div className="mb-3">
@@ -45,11 +47,13 @@ const CreateUser = () => {
                   Email
                 </label>
                 <input
-                  type="text"
+                  type="email"
                   id="email"
                   placeholder="Enter Email"
                   className="form-control"
+                  value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                  required
                 />
               </div>
               <div className="mb-3">
@@ -57,14 +61,19 @@ const CreateUser = () => {
                   Age
                 </label>
                 <input
-                  type="text"
+                  type="number"
                   id="age"
                   placeholder="Enter Age"
                   className="form-control"
+                  value={age}
                   onChange={(e) => setAge(e.target.value)}
+                  required
+                  min="0"
                 />
               </div>
-              <button className="btn btn-success">Submit</button>
+              <button className="btn btn-success" type="submit">
+                Submit
+              </button>
             </form>
           </div>
         </div>
